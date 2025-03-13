@@ -18,9 +18,3 @@ updates:
     directory: "/" # Root directory (where `Dockerfile` is)
     schedule:
       interval: "weekly"
-
-  # 4️⃣ **Jenkins Pipelines (Optional)**
-  - package-ecosystem: "jenkins"
-    directory: "/"
-    schedule:
-      interval: "monthly"
