@@ -1,1 +1,51 @@
-trigger
+name: Security Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sast:
+    name: Run SAST with Semgrep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Semgrep Scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: auto
+      # Optional: Attempt to auto-fix issues (review is essential)
+      - name: Auto-fix SAST issues (if supported)
+        run: |
+          semgrep --config=auto --auto-fix
+          # Commit and push auto-fix changes as a pull request for review
+
+  sca:
+    name: Run SCA with Snyk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk Dependency Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test
+      # Auto-remediation for dependencies can be done by Snyk or Dependabot,
+      # which create PRs to update vulnerable libraries
+
+  dast:
+    name: Run DAST with OWASP ZAP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Ensure your application is running (e.g. via docker-compose)
+      - name: Start application (if required)
+        run: docker-compose up -d
+      - name: Run OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.5.0
+        with:
+          target: 'http://localhost:8080'
+          # Results can be used to create issues for manual remediation
