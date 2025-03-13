@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"  # Location of package.json (root directory)
+    schedule:
+      interval: "daily"  # You can set this to daily, weekly, or monthly
+    open-pull-requests-limit: 5
+    ignore:
+      - dependency-name: "express"  # Example: Ignore updates for express
+
