@@ -1,10 +1,26 @@
 version: 2
 updates:
+  # 1️⃣ **NPM Packages**
   - package-ecosystem: "npm"
-    directory: "/"  # Location of package.json (root directory)
+    directory: "/" # Root directory (where `package.json` is)
     schedule:
-      interval: "daily"  # You can set this to daily, weekly, or monthly
+      interval: "daily"
     open-pull-requests-limit: 5
-    ignore:
-      - dependency-name: "express"  # Example: Ignore updates for express
 
+  # 2️⃣ **GitHub Actions**
+  - package-ecosystem: "github-actions"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "weekly"
+
+  # 3️⃣ **Docker**
+  - package-ecosystem: "docker"
+    directory: "/" # Root directory (where `Dockerfile` is)
+    schedule:
+      interval: "weekly"
+
+  # 4️⃣ **Jenkins Pipelines (Optional)**
+  - package-ecosystem: "jenkins"
+    directory: "/"
+    schedule:
+      interval: "monthly"
