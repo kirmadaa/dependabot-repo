@@ -2,7 +2,7 @@ version: 2
 updates:
   # 1️⃣ **NPM Packages**
   - package-ecosystem: "npm"
-    directory: "/" # Root directory (where `package.json` is)
+    directory: "/" 
     schedule:
       interval: "daily"
     open-pull-requests-limit: 5
@@ -15,6 +15,6 @@ updates:
 
   # 3️⃣ **Docker**
   - package-ecosystem: "docker"
-    directory: "/" # Root directory (where `Dockerfile` is)
+    directory: "/" 
     schedule:
       interval: "weekly"
